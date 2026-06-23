@@ -80,9 +80,9 @@ body {
    5. HERO SECTION — Logo
 ----------------------------------------------- */
 .logo-img {
-  /* clamp(min, preferred, max) scales the logo with the viewport */
   width: clamp(140px, 22vw, 220px);
   height: auto;
+  animation: logoEntrance 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* -----------------------------------------------
@@ -111,6 +111,7 @@ body {
 .tagline {
   font-family: 'EB Garamond', Georgia, serif;
   font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-style: italic;
   font-weight: 400;
   letter-spacing: 0.04em;
   line-height: 1.6;
@@ -177,11 +178,12 @@ body {
   justify-content: center;
   color: var(--dark);
   text-decoration: none;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .platform-btn:hover {
-  opacity: 0.6;
+  opacity: 0.7;
+  transform: scale(1.12);
 }
 
 .platform-icon {
@@ -262,6 +264,74 @@ body {
   }
 
   .platform-links {
+    flex-wrap: wrap;
     gap: 2rem;
+    max-width: 280px;
   }
+
+  .platform-icon {
+    height: 28px;
+  }
+}
+
+/* -----------------------------------------------
+   13. ANIMATIONS
+----------------------------------------------- */
+
+@keyframes logoEntrance {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(7px); }
+}
+
+/* Scroll-triggered fade in */
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+}
+
+/* Scroll cue in hero */
+.scroll-cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--cream);
+  font-size: 1.4rem;
+  opacity: 0.45;
+  animation: bounce 2.2s ease-in-out infinite;
+  animation-delay: 1.2s;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Dark gradient on music section so Spotify reads over the photo */
+.music-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 55%;
+  background: linear-gradient(to bottom, rgba(38, 51, 64, 0.72) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#spotify-embed {
+  z-index: 2;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .logo-img    { animation: none; }
+  .scroll-cue  { animation: none; }
+  .fade-in     { opacity: 1; transition: none; }
 }
